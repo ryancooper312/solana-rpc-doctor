@@ -1,0 +1,25 @@
+{
+  "name": "solana-rpc-doctor",
+  "version": "0.1.0",
+  "description": "Zero-dependency Solana JSON-RPC diagnostic toolkit for latency percentiles, health checks, and prioritization fee analysis.",
+  "type": "module",
+  "main": "./src/rpc.ts",
+  "bin": {
+    "solana-rpc-doctor": "./bin/cli.mjs"
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/*.test.ts"
+  },
+  "keywords": [
+    "solana",
+    "rpc",
+    "diagnostics",
+    "priority-fees",
+    "web3"
+  ],
+  "author": "ryancooper312 <lixianzxc@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
