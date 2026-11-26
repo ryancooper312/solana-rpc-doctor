@@ -238,3 +238,27 @@ export async function diagnoseEndpoint(
         warnings,
     };
 }
+
+/**
+ * Render a human-readable diagnostics report for terminal usage.
+ */
+export function formatDiagnosticsReport(report: RpcDiagnosticsResult): string {
+    const lines = [
+        `Solana RPC Doctor — ${report.endpoint}`,
+        `Status: ${report.healthy ? 'HEALTHY' : 'DEGRADED'} (${report.healthDetail})`,
+        `Core Version: ${report.solanaCoreVersion ?? 'unknown'}`,
+        `Confirmed Slot: ${report.slot ?? 'unavailable'}${report.slotLag !== null ? ` (lag: ${report.slotLag} slots)` : ''}`,
+        `Latency (ms): min=${report.latency.minMs} p50=${report.latency.p50Ms} p95=${report.latency.p95Ms} max=${report.latency.maxMs} jitter=${report.latency.jitterMs}`,
+        `Priority Fees (microLamports): recommended=${report.priorityFees.recommendedMicroLamports} p75=${report.priorityFees.p75MicroLamports} max=${report.priorityFees.maxMicroLamports} (${report.priorityFees.nonZeroCount}/${report.priorityFees.sampleCount} non-zero)`,
+    ];
+
+    if (report.warnings.length > 0) {
+        lines.push('Warnings:');
+        for (const warning of report.warnings) {
+            lines.push(`  - ${warning}`);
+        }
+    }
+
+    return lines.join('\n');
+}
+
